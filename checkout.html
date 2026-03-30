@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar Compra — Festa dos 15 Sem Stress</title>
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'INSERIR_SEU_PIXEL_ID_AQUI');
+fbq('track', 'PageView');
+fbq('track', 'InitiateCheckout', { value: 9.90, currency: 'BRL', content_name: 'Kit Festa dos 15 Sem Stress' });
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=INSERIR_SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"/></noscript>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#1a1a2e;background:#f8f8fb;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+:root{
+  --rosa:#d91e7a;
+  --rosa-light:#fde8f3;
+  --gold:#b8922e;
+  --dark:#1a1a2e;
+  --gray:#6b7280;
+  --border:#e5e7eb;
+  --green:#15803d;
+  --green-bg:#f0fdf4;
+  --shadow:0 4px 20px rgba(0,0,0,.07);
+  --radius:10px;
+}
+
+/* HEADER */
+.checkout-header{background:#fff;border-bottom:1px solid var(--border);padding:.9rem 1.25rem}
+.checkout-header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--dark)}
+.logo span{color:var(--rosa)}
+.secure-label{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--green);font-weight:600}
+.back-link{font-size:.78rem;color:var(--gray);display:flex;align-items:center;gap:.35rem}
+.back-link:hover{color:var(--dark)}
+.back-link svg{width:14px;height:14px}
+
+/* LAYOUT */
+.checkout-body{max-width:900px;margin:2rem auto;padding:0 1.25rem 4rem;display:grid;grid-template-columns:1fr 400px;gap:1.8rem;align-items:start}
+
+/* FORM SIDE */
+.form-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+.form-section{padding:1.5rem 1.8rem;border-bottom:1px solid var(--border)}
+.form-section:last-child{border-bottom:none}
+.section-label{display:flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray);margin-bottom:1.2rem}
+.section-label svg{color:var(--rosa)}
+.section-num{width:22px;height:22px;border-radius:50%;background:var(--rosa);color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+.form-group{margin-bottom:1rem}
+.form-group:last-child{margin-bottom:0}
+label{display:block;font-size:.78rem;font-weight:600;color:var(--dark);margin-bottom:.35rem}
+input,select{
+  width:100%;padding:.72rem .9rem;
+  border:1.5px solid var(--border);border-radius:8px;
+  font-family:'Inter',sans-serif;font-size:.9rem;color:var(--dark);
+  background:#fff;transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+}
+input::placeholder{color:#c4c4cc}
+input:focus,select:focus{outline:none;border-color:var(--rosa);box-shadow:0 0 0 3px rgba(217,30,122,.08)}
+input.error{border-color:#dc2626}
+.field-error{font-size:.72rem;color:#dc2626;margin-top:.3rem;display:none}
+.field-error.show{display:block}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem}
+
+/* Card brand indicator */
+.card-field-wrap{position:relative}
+.card-brand{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);width:32px;height:20px;display:flex;align-items:center;justify-content:center}
+.card-brand svg{width:28px;height:auto}
+
+/* Payment method tabs */
+.payment-tabs{display:flex;gap:.5rem;margin-bottom:1.4rem}
+.pay-tab{
+  flex:1;padding:.65rem;border:1.5px solid var(--border);border-radius:8px;
+  background:#fff;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--gray);
+  display:flex;flex-direction:column;align-items:center;gap:.35rem;transition:all .2s;
+  font-family:'Inter',sans-serif;
+}
+.pay-tab svg{width:20px;height:20px}
+.pay-tab:hover{border-color:var(--rosa);color:var(--rosa)}
+.pay-tab.active{border-color:var(--rosa);background:var(--rosa-light);color:var(--rosa)}
+.payment-panel{display:none}
+.payment-panel.active{display:block}
+
+/* Pix display */
+.pix-info{text-align:center;padding:1rem}
+.pix-icon{font-size:3rem;margin-bottom:.8rem}
+.pix-text{font-size:.88rem;color:var(--gray);line-height:1.7}
+.pix-price{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--rosa);margin:.6rem 0}
+
+/* Submit button */
+.btn-submit{
+  width:100%;padding:1rem;background:var(--rosa);color:#fff;
+  border:none;border-radius:8px;font-family:'Inter',sans-serif;
+  font-size:1rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 16px rgba(217,30,122,.3);
+}
+.btn-submit:hover{background:#b8185f;transform:translateY(-1px);box-shadow:0 6px 22px rgba(217,30,122,.4)}
+.btn-submit:active{transform:none}
+.btn-submit:disabled{background:#9ca3af;box-shadow:none;cursor:not-allowed;transform:none}
+.btn-submit svg{width:18px;height:18px}
+
+/* Status messages */
+#payment-status{margin-top:1rem;padding:1rem;border-radius:8px;font-size:.88rem;font-weight:500;display:none;text-align:center}
+#payment-status.success{display:block;background:var(--green-bg);color:var(--green);border:1px solid #bbf7d0}
+#payment-status.error{display:block;background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+
+/* SUMMARY SIDE */
+.summary-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);padding:1.5rem;position:sticky;top:5rem}
+.summary-title{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray);margin-bottom:1.2rem}
+.summary-product{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)}
+.product-thumb{width:50px;height:60px;background:var(--rosa-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.product-info{flex:1}
+.product-name{font-size:.88rem;font-weight:700;color:var(--dark);margin-bottom:.2rem}
+.product-desc{font-size:.75rem;color:var(--gray);line-height:1.4}
+.summary-items{margin-bottom:1.2rem}
+.summary-item{display:flex;align-items:center;gap:.5rem;padding:.3rem 0;font-size:.8rem;color:var(--dark)}
+.summary-item svg{color:var(--green);flex-shrink:0;width:14px;height:14px}
+.summary-divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
+.price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.price-row span:first-child{font-size:.82rem;color:var(--gray)}
+.price-row span:last-child{font-size:.82rem;color:var(--gray);text-decoration:line-through}
+.price-total{display:flex;justify-content:space-between;align-items:center;margin-top:.6rem}
+.price-total span:first-child{font-size:.9rem;font-weight:700;color:var(--dark)}
+.price-total-value{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--rosa)}
+
+/* Trust items in summary */
+.summary-trust{margin-top:1.2rem;display:flex;flex-direction:column;gap:.6rem}
+.trust-row{display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:var(--gray)}
+.trust-row svg{color:var(--green);flex-shrink:0;width:15px;height:15px}
+.trust-row strong{color:var(--dark)}
+
+/* Guarantee box */
+.guarantee-mini{background:var(--green-bg);border:1px solid #bbf7d0;border-radius:8px;padding:.85rem;display:flex;align-items:center;gap:.7rem;margin-top:1rem}
+.guarantee-mini svg{color:var(--green);flex-shrink:0}
+.guarantee-mini p{font-size:.75rem;color:#166534;line-height:1.4;margin:0}
+
+/* Security logos row */
+.security-logos{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.security-logos-label{font-size:.68rem;color:#9ca3af;text-align:center;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.5px}
+.logos-row{display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap}
+.logo-badge{
+  display:flex;align-items:center;gap:.35rem;
+  background:var(--border);border-radius:6px;padding:.35rem .7rem;
+  font-size:.65rem;font-weight:700;color:var(--gray);
+}
+.logo-badge svg{width:14px;height:14px}
+
+/* SUCCESS PAGE */
+.success-page{display:none;text-align:center;padding:3rem 1.5rem;max-width:500px;margin:0 auto}
+.success-icon{width:72px;height:72px;background:var(--green-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.success-icon svg{color:var(--green);width:36px;height:36px}
+.success-page h2{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:.8rem;color:var(--dark)}
+.success-page p{font-size:.9rem;color:var(--gray);line-height:1.7}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  .checkout-body{grid-template-columns:1fr;gap:1.2rem}
+  .summary-card{position:static;order:-1}
+  .form-row-3{grid-template-columns:1fr 1fr}
+  .form-section{padding:1.2rem 1.2rem}
+}
+@media(max-width:480px){
+  .form-row,.form-row-3{grid-template-columns:1fr}
+  .payment-tabs .pay-tab{font-size:.7rem}
+}
+</style>
+</head>
+<body>
+
+<script>
+const CHECKOUT = {
+  PIXEL_ID: 'INSERIR_SEU_PIXEL_ID_AQUI',
+  MP_PUBLIC_KEY: 'INSERIR_SUA_PUBLIC_KEY_AQUI',
+  BACKEND_URL: 'https://SEU-BACKEND.vercel.app',
+};
+</script>
+
+<!-- HEADER -->
+<header class="checkout-header">
+  <div class="checkout-header-inner">
+    <a href="/" class="back-link">
+      <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar
+    </a>
+    <div class="logo">Festa dos 15 <span>Sem Stress</span></div>
+    <div class="secure-label">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Checkout seguro
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+  <div class="checkout-body" id="checkout-body">
+
+    <!-- FORM -->
+    <div class="form-card" id="form-card">
+
+      <!-- DADOS PESSOAIS -->
+      <div class="form-section">
+        <div class="section-label">
+          <div class="section-num">1</div>
+          Seus dados
+        </div>
+        <div class="form-group">
+          <label for="f-name">Nome completo</label>
+          <input type="text" id="f-name" name="name" placeholder="Seu nome completo" autocomplete="name" required>
+          <div class="field-error" id="err-name">Por favor, informe seu nome.</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-email">E-mail</label>
+            <input type="email" id="f-email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+            <div class="field-error" id="err-email">E-mail inválido.</div>
+          </div>
+          <div class="form-group">
+            <label for="f-cpf">CPF</label>
+            <input type="text" id="f-cpf" name="cpf" placeholder="000.000.000-00" autocomplete="off" required maxlength="14">
+            <div class="field-error" id="err-cpf">CPF inválido.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGAMENTO -->
+      <div class="form-section">
+        <div class="section-label">
+          <div class="section-num">2</div>
+          Forma de pagamento
+        </div>
+
+        <!-- TABS -->
+        <div class="payment-tabs">
+          <button type="button" class="pay-tab active" data-tab="card">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Cartão
+          </button>
+          <button type="button" class="pay-tab" data-tab="pix">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Pix
+          </button>
+          <button type="button" class="pay-tab" data-tab="boleto">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="9" y1="8" x2="9" y2="16"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="15" y1="8" x2="15" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
+            Boleto
+          </button>
+        </div>
+
+        <!-- PANEL: CARTÃO -->
+        <div class="payment-panel active" id="panel-card">
+          <div class="form-group">
+            <label for="f-card-num">Número do cartão</label>
+            <div class="card-field-wrap">
+              <input type="text" id="f-card-num" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" inputmode="numeric">
+              <div class="card-brand" id="card-brand-icon"></div>
+            </div>
+            <div class="field-error" id="err-card">Número do cartão inválido.</div>
+          </div>
+          <div class="form-group">
+            <label for="f-card-holder">Nome no cartão</label>
+            <input type="text" id="f-card-holder" placeholder="NOME COMO NO CARTÃO" autocomplete="cc-name" style="text-transform:uppercase">
+          </div>
+          <div class="form-row-3">
+            <div class="form-group" style="grid-column:span 2">
+              <label for="f-expiry">Validade</label>
+              <input type="text" id="f-expiry" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp" inputmode="numeric">
+              <div class="field-error" id="err-expiry">Data inválida.</div>
+            </div>
+            <div class="form-group">
+              <label for="f-cvv">CVV</label>
+              <input type="text" id="f-cvv" placeholder="123" maxlength="4" autocomplete="cc-csc" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL: PIX -->
+        <div class="payment-panel" id="panel-pix">
+          <div class="pix-info">
+            <div class="pix-icon">⚡</div>
+            <p class="pix-text">Após clicar em "Pagar", você receberá um QR Code Pix.<br>O acesso ao kit é liberado em segundos após o pagamento.</p>
+            <div class="pix-price">R$ 9,90</div>
+          </div>
+        </div>
+
+        <!-- PANEL: BOLETO -->
+        <div class="payment-panel" id="panel-boleto">
+          <div class="pix-info">
+            <div class="pix-icon">📄</div>
+            <p class="pix-text">O boleto vence em <strong>1 dia útil</strong>.<br>O acesso ao kit é liberado após a compensação do pagamento (até 3 dias úteis).</p>
+            <div class="pix-price">R$ 9,90</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="form-section">
+        <button type="button" id="btn-pay" class="btn-submit">
+          <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pagar R$ 9,90 com segurança
+        </button>
+        <div id="payment-status"></div>
+        <p style="text-align:center;font-size:.7rem;color:#9ca3af;margin-top:.85rem;line-height:1.6">
+          Ao finalizar a compra você concorda com os
+          <a href="/termos.html" style="color:var(--rosa)">Termos de Uso</a> e
+          <a href="/privacidade.html" style="color:var(--rosa)">Política de Privacidade</a>.
+        </p>
+      </div>
+    </div>
+
+    <!-- RESUMO / SUMMARY -->
+    <aside class="summary-card">
+      <div class="summary-title">Resumo do pedido</div>
+
+      <div class="summary-product">
+        <div class="product-thumb">📦</div>
+        <div class="product-info">
+          <div class="product-name">Kit Festa dos 15 Sem Stress</div>
+          <div class="product-desc">5 itens &bull; Download imediato por e-mail</div>
+        </div>
+      </div>
+
+      <div class="summary-items">
+        <div class="summary-item"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Guia Completo — 12 capítulos (PDF)</div>
+        <div class="summary-item"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Checklist por Fases — 12 meses (PDF)</div>
+        <div class="summary-item"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Planilha de Orçamento (Excel)</div>
+        <div class="summary-item"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bônus: Cronograma do Dia</div>
+        <div class="summary-item"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bônus: Perguntas para Fornecedores</div>
+      </div>
+
+      <hr class="summary-divider">
+
+      <div class="price-row">
+        <span>Valor original</span>
+        <span>R$ 145,00</span>
+      </div>
+      <div class="price-row">
+        <span style="color:var(--green);font-weight:600;text-decoration:none">Desconto</span>
+        <span style="color:var(--green);text-decoration:none;font-weight:600">-R$ 135,10</span>
+      </div>
+      <div class="price-total">
+        <span>Total</span>
+        <span class="price-total-value">R$ 9,90</span>
+      </div>
+
+      <div class="summary-trust">
+        <div class="trust-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span><strong>Compra 100% segura</strong> — SSL 256-bit</span>
+        </div>
+        <div class="trust-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span><strong>Acesso imediato</strong> pelo e-mail informado</span>
+        </div>
+        <div class="trust-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Processado pelo <strong>Mercado Pago</strong></span>
+        </div>
+      </div>
+
+      <div class="guarantee-mini">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <p><strong>Garantia de 7 dias.</strong> Se não gostar, devolvemos 100% do valor. Sem perguntas.</p>
+      </div>
+
+      <div class="security-logos">
+        <div class="security-logos-label">Pagamento protegido por</div>
+        <div class="logos-row">
+          <div class="logo-badge">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            SSL Seguro
+          </div>
+          <div class="logo-badge">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Mercado Pago
+          </div>
+          <div class="logo-badge">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="2"/></svg>
+            PCI DSS
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-page" id="success-page">
+    <div class="success-icon">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Pagamento confirmado!</h2>
+    <p>Seu kit foi enviado para o e-mail <strong id="success-email"></strong>.<br><br>Verifique também a caixa de spam. Em caso de dúvida, entre em contato pelo e-mail <a href="mailto:contato@festados15semstress.com.br" style="color:var(--rosa)">contato@festados15semstress.com.br</a>.</p>
+  </div>
+</main>
+
+<!-- Mercado Pago SDK -->
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+
+<script>
+/* === MASKS === */
+const cpfInput = document.getElementById('f-cpf');
+cpfInput.addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
+  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d{0,3})/, '$1.$2');
+  e.target.value = v;
+});
+
+const cardInput = document.getElementById('f-card-num');
+cardInput.addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+  v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+  e.target.value = v;
+  detectCardBrand(v.replace(/\s/g, ''));
+});
+
+const expiryInput = document.getElementById('f-expiry');
+expiryInput.addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length > 2) v = v.replace(/(\d{2})(\d{0,2})/, '$1/$2');
+  e.target.value = v;
+});
+
+document.getElementById('f-card-holder').addEventListener('input', e => {
+  e.target.value = e.target.value.toUpperCase();
+});
+
+/* === CARD BRAND DETECTION === */
+function detectCardBrand(num) {
+  const icon = document.getElementById('card-brand-icon');
+  if (/^4/.test(num)) {
+    icon.innerHTML = `<svg viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="4" fill="#1A1F71"/><text x="4" y="17" font-size="11" font-weight="bold" fill="white" font-family="Arial">VISA</text></svg>`;
+  } else if (/^5[1-5]/.test(num) || /^2[2-7]/.test(num)) {
+    icon.innerHTML = `<svg viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="4" fill="#EB001B"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.8a7 7 0 0 1 0 10.4A7 7 0 0 1 19 6.8z" fill="#FF5F00"/></svg>`;
+  } else if (/^3[47]/.test(num)) {
+    icon.innerHTML = `<svg viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="4" fill="#2E77BC"/><text x="5" y="17" font-size="8" font-weight="bold" fill="white" font-family="Arial">AMEX</text></svg>`;
+  } else if (/^6(?:011|5)/.test(num)) {
+    icon.innerHTML = `<svg viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="4" fill="#F76F20"/><text x="2" y="17" font-size="8" font-weight="bold" fill="white" font-family="Arial">DISCOVER</text></svg>`;
+  } else {
+    icon.innerHTML = '';
+  }
+}
+
+/* === PAYMENT TABS === */
+document.querySelectorAll('.pay-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.payment-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + target).classList.add('active');
+  });
+});
+
+/* === VALIDATION === */
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg || el.textContent; el.classList.add('show'); }
+}
+function clearErr(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+function validateCPF(cpf) {
+  cpf = cpf.replace(/\D/g, '');
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+  let sum = 0;
+  for (let i = 0; i < 9; i++) sum += parseInt(cpf[i]) * (10 - i);
+  let r = (sum * 10) % 11;
+  if (r === 10 || r === 11) r = 0;
+  if (r !== parseInt(cpf[9])) return false;
+  sum = 0;
+  for (let i = 0; i < 10; i++) sum += parseInt(cpf[i]) * (11 - i);
+  r = (sum * 10) % 11;
+  if (r === 10 || r === 11) r = 0;
+  return r === parseInt(cpf[10]);
+}
+
+/* === SUBMIT === */
+let mp;
+try {
+  if (CHECKOUT.MP_PUBLIC_KEY !== 'INSERIR_SUA_PUBLIC_KEY_AQUI') {
+    mp = new MercadoPago(CHECKOUT.MP_PUBLIC_KEY, { locale: 'pt-BR' });
+  }
+} catch(e) { console.warn('MP SDK:', e); }
+
+const btnPay = document.getElementById('btn-pay');
+const statusEl = document.getElementById('payment-status');
+const activeTab = () => document.querySelector('.pay-tab.active').dataset.tab;
+
+btnPay.addEventListener('click', async () => {
+  // Clear errors
+  ['err-name','err-email','err-cpf','err-card','err-expiry'].forEach(clearErr);
+  statusEl.className = '';
+  statusEl.style.display = 'none';
+
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const cpf = document.getElementById('f-cpf').value.trim();
+  const tab = activeTab();
+
+  // Validate common fields
+  let valid = true;
+  if (!name) { showErr('err-name'); valid = false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email'); valid = false; }
+  if (!validateCPF(cpf)) { showErr('err-cpf'); valid = false; }
+
+  if (tab === 'card') {
+    const cardNum = document.getElementById('f-card-num').value.replace(/\s/g,'');
+    if (cardNum.length < 16) { showErr('err-card'); valid = false; }
+    const exp = document.getElementById('f-expiry').value;
+    if (!/^\d{2}\/\d{2}$/.test(exp)) { showErr('err-expiry'); valid = false; }
+  }
+
+  if (!valid) return;
+
+  // Track Pixel
+  if (typeof fbq === 'function') fbq('track', 'InitiateCheckout', { value: 9.9, currency: 'BRL' });
+
+  btnPay.disabled = true;
+  btnPay.innerHTML = `
+    <svg style="animation:spin 1s linear infinite" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    Processando...
+  `;
+
+  try {
+    let body = { email, name, cpf: cpf.replace(/\D/g,''), amount: 9.90, description: 'Kit Festa dos 15 Sem Stress', payment_type: tab };
+
+    if (tab === 'card') {
+      if (!mp) throw new Error('Configure MP_PUBLIC_KEY em CHECKOUT.MP_PUBLIC_KEY');
+      const [expMonth, expYear] = document.getElementById('f-expiry').value.split('/');
+      const token = await mp.createCardToken({
+        cardNumber: document.getElementById('f-card-num').value.replace(/\s/g,''),
+        cardholderName: document.getElementById('f-card-holder').value,
+        cardExpirationMonth: expMonth,
+        cardExpirationYear: '20' + expYear,
+        securityCode: document.getElementById('f-cvv').value,
+        identificationType: 'CPF',
+        identificationNumber: cpf.replace(/\D/g,''),
+      });
+      body.token = token.id;
+      body.installments = 1;
+    }
+
+    const res = await fetch(`${CHECKOUT.BACKEND_URL}/api/pagamento`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const result = await res.json();
+
+    if (result.status === 'approved' || result.status === 'pending') {
+      if (typeof fbq === 'function') fbq('track', 'Purchase', { value: 9.9, currency: 'BRL', content_name: 'Kit Festa dos 15 Sem Stress' });
+      document.getElementById('checkout-body').style.display = 'none';
+      document.getElementById('success-email').textContent = email;
+      document.getElementById('success-page').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error(result.message || 'Pagamento não aprovado. Verifique os dados do cartão.');
+    }
+  } catch (err) {
+    statusEl.textContent = err.message;
+    statusEl.className = 'error';
+    statusEl.style.display = 'block';
+    btnPay.disabled = false;
+    btnPay.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Pagar R$ 9,90 com segurança`;
+  }
+});
+
+/* === SPINNER CSS === */
+const style = document.createElement('style');
+style.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(style);
+</script>
+</body>
+</html>

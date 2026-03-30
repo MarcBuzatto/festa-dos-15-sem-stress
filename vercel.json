@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/checkout", "dest": "/checkout.html" },
+    { "src": "/termos", "dest": "/termos.html" },
+    { "src": "/privacidade", "dest": "/privacidade.html" }
+  ]
+}
