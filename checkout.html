@@ -567,10 +567,8 @@ btnPay.addEventListener('click', async () => {
 
     if (result.status === 'approved' || result.status === 'pending') {
       if (typeof fbq === 'function') fbq('track', 'Purchase', { value: 9.9, currency: 'BRL', content_name: 'Kit Festa dos 15 Sem Stress' });
-      document.getElementById('checkout-body').style.display = 'none';
-      document.getElementById('success-email').textContent = email;
-      document.getElementById('success-page').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Redireciona para a página de downloads com o token
+      window.location.href = `/downloads.html?token=${encodeURIComponent(result.downloadToken)}`;
     } else {
       throw new Error(result.message || 'Pagamento não aprovado. Verifique os dados do cartão.');
     }
