@@ -31,11 +31,11 @@ const transporter = nodemailer.createTransport({
    PRODUTOS — coloque os arquivos em /produtos
    ========================================== */
 const PRODUTOS = [
-  { id: 'guia',       file: 'guia-completo.pdf',         nome: 'Guia Completo — 12 Capítulos' },
-  { id: 'checklist',  file: 'checklist-fases.pdf',        nome: 'Checklist por Fases — 12 Meses' },
-  { id: 'planilha',   file: 'planilha-orcamento.xlsx',    nome: 'Planilha de Orçamento' },
-  { id: 'cronograma', file: 'bonus-cronograma.pdf',       nome: 'Bônus: Cronograma do Dia da Festa' },
-  { id: 'perguntas',  file: 'bonus-perguntas.pdf',        nome: 'Bônus: Perguntas para Fornecedores' },
+  { id: 'guia',       file: 'guia_festa_debutante.pdf',            nome: 'Guia Completo — 12 Capítulos' },
+  { id: 'checklist',  file: 'checklist_debutante.pdf',             nome: 'Checklist por Fases — 12 Meses' },
+  { id: 'planilha',   file: 'planilha_orcamento_debutante.xlsx',   nome: 'Planilha de Orçamento' },
+  { id: 'cronograma', file: 'bonus1_cronograma_dia.pdf',           nome: 'Bônus: Cronograma do Dia da Festa' },
+  { id: 'perguntas',  file: 'bonus2_perguntas_fornecedores.pdf',   nome: 'Bônus: Perguntas para Fornecedores' },
 ];
 const PRODUTOS_DIR = path.join(__dirname, 'produtos');
 
