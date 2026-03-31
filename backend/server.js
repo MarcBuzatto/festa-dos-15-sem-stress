@@ -14,18 +14,38 @@ app.use(cors({ origin: process.env.FRONTEND_URL || '*', methods: ['GET', 'POST']
 /* ==========================================
    MERCADO PAGO
    ========================================== */
-const mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN });
-const paymentAPI = new Payment(mpClient);
+let mpClient, paymentAPI;
+try {
+  if (process.env.MP_ACCESS_TOKEN) {
+    mpClient = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN });
+    paymentAPI = new Payment(mpClient);
+    console.log('✅ Mercado Pago configurado');
+  } else {
+    console.warn('⚠️ MP_ACCESS_TOKEN não definido');
+  }
+} catch (err) {
+  console.error('❌ Erro ao inicializar Mercado Pago:', err.message);
+}
 
 /* ==========================================
    NODEMAILER
    ========================================== */
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '465'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-});
+let transporter;
+try {
+  if (process.env.SMTP_HOST) {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '465'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    });
+    console.log('✅ Nodemailer configurado');
+  } else {
+    console.warn('⚠️ SMTP não configurado — e-mails desativados');
+  }
+} catch (err) {
+  console.error('❌ Erro ao inicializar Nodemailer:', err.message);
+}
 
 /* ==========================================
    PRODUTOS — coloque os arquivos em /produtos
@@ -58,7 +78,8 @@ function verificarToken(token) {
    HELPER — enviar kit por e-mail
    ========================================== */
 async function enviarKit({ email, name, paymentId, downloadToken }) {
-  const downloadUrl = `${process.env.FRONTEND_URL || 'https://festa-dos-15.vercel.app'}/downloads.html?token=${encodeURIComponent(downloadToken)}`;
+  if (!transporter) { console.warn('⚠️ E-mail não enviado: SMTP não configurado'); return; }
+  const downloadUrl = `${process.env.FRONTEND_URL || 'https://festa-dos-15-sem-stress.vercel.app'}/downloads.html?token=${encodeURIComponent(downloadToken)}`;
 
   const html = `
     <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"></head>
@@ -112,27 +133,39 @@ async function enviarKit({ email, name, paymentId, downloadToken }) {
    POST /api/pagamento
    ========================================== */
 app.post('/api/pagamento', async (req, res) => {
-  const { token, email, name, cpf, amount, description, installments } = req.body;
+  const { token, email, name, cpf, amount, description, installments, payment_type } = req.body;
 
-  if (!token || !email || !name || !cpf) {
+  if (!email || !name || !cpf) {
     return res.status(400).json({ status: 'error', message: 'Dados incompletos.' });
   }
 
+  if (!paymentAPI) {
+    return res.status(503).json({ status: 'error', message: 'Serviço de pagamento não configurado.' });
+  }
+
   try {
-    const payment = await paymentAPI.create({
-      body: {
-        transaction_amount: parseFloat(amount || 9.9),
-        token,
-        description: description || 'Kit Festa dos 15 Sem Stress',
-        installments: parseInt(installments || 1),
-        payer: {
-          email,
-          identification: { type: 'CPF', number: cpf.replace(/\D/g, '') },
-          first_name: name.split(' ')[0],
-          last_name: name.split(' ').slice(1).join(' ') || name.split(' ')[0],
-        },
+    const paymentBody = {
+      transaction_amount: parseFloat(amount || 9.9),
+      description: description || 'Kit Festa dos 15 Sem Stress',
+      payer: {
+        email,
+        identification: { type: 'CPF', number: cpf.replace(/\D/g, '') },
+        first_name: name.split(' ')[0],
+        last_name: name.split(' ').slice(1).join(' ') || name.split(' ')[0],
       },
-    });
+    };
+
+    if (payment_type === 'pix') {
+      paymentBody.payment_method_id = 'pix';
+    } else if (payment_type === 'boleto') {
+      paymentBody.payment_method_id = 'bolbradesco';
+    } else {
+      // Cartão de crédito
+      paymentBody.token = token;
+      paymentBody.installments = parseInt(installments || 1);
+    }
+
+    const payment = await paymentAPI.create({ body: paymentBody });
 
     if (payment.status === 'approved' || payment.status === 'in_process' || payment.status === 'pending') {
       const downloadToken = gerarDownloadToken({ paymentId: payment.id, email, name });
@@ -266,3 +299,5 @@ app.listen(PORT, () => {
   console.log(`   Health: http://localhost:${PORT}/health`);
   console.log(`   Produtos em: ${PRODUTOS_DIR}\n`);
 });
+
+module.exports = app;
