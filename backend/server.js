@@ -293,11 +293,16 @@ app.get('/health', (req, res) => {
 /* ==========================================
    START
    ========================================== */
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`\n🚀 Servidor rodando na porta ${PORT}`);
-  console.log(`   Health: http://localhost:${PORT}/health`);
-  console.log(`   Produtos em: ${PRODUTOS_DIR}\n`);
-});
+/* ==========================================
+   START (só em dev local, não no Vercel)
+   ========================================== */
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Servidor rodando na porta ${PORT}`);
+    console.log(`   Health: http://localhost:${PORT}/health`);
+    console.log(`   Produtos em: ${PRODUTOS_DIR}\n`);
+  });
+}
 
 module.exports = app;
