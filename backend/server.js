@@ -203,7 +203,29 @@ app.post('/api/pagamento', async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Erro MP:', err);
+    console.error('Erro MP:', JSON.stringify(err?.cause || err?.message || err));
+
+    // SDK v2 lança exceção com dados do pagamento em err.cause
+    const cause = err?.cause;
+    const errStatus = cause?.status || cause?.payment_status;
+    const errDetail = cause?.status_detail || cause?.payment_status_detail;
+
+    if (errStatus === 'rejected' || errDetail) {
+      const rejectReasons = {
+        cc_rejected_insufficient_amount: 'Saldo insuficiente.',
+        cc_rejected_bad_filled_card_number: 'Número do cartão inválido.',
+        cc_rejected_bad_filled_date: 'Data de validade inválida.',
+        cc_rejected_bad_filled_security_code: 'CVV inválido.',
+        cc_rejected_call_for_authorize: 'Cartão requer autorização do banco.',
+        cc_rejected_high_risk: 'Pagamento recusado por segurança. Tente outro cartão.',
+        cc_rejected_blacklist: 'Cartão recusado. Tente outro cartão.',
+      };
+      return res.status(402).json({
+        status: 'rejected',
+        message: rejectReasons[errDetail] || `Pagamento não aprovado: ${errDetail || 'tente outro cartão.'}`,
+      });
+    }
+
     return res.status(500).json({ status: 'error', message: 'Erro ao processar pagamento. Tente novamente.' });
   }
 });
