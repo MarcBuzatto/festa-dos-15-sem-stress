@@ -307,34 +307,6 @@ app.post('/api/webhook', async (req, res) => {
 });
 
 /* ==========================================
-   POST /api/debug-payment (temporário - remover em produção)
-   ========================================== */
-app.post('/api/debug-payment', async (req, res) => {
-  if (!paymentAPI) return res.json({ error: 'paymentAPI not initialized' });
-  try {
-    const { token } = req.body;
-    const payment = await paymentAPI.create({
-      body: {
-        transaction_amount: 9.90,
-        token,
-        description: 'Teste',
-        installments: 1,
-        payer: { email: 'test@teste.com', identification: { type: 'CPF', number: '19119119100' } },
-      },
-    });
-    return res.json({ ok: true, status: payment.status, detail: payment.status_detail });
-  } catch (err) {
-    return res.json({
-      ok: false,
-      message: err.message,
-      cause: err.cause,
-      errKeys: Object.keys(err),
-      errStr: String(err),
-    });
-  }
-});
-
-/* ==========================================
    GET /health
    ========================================== */
 app.get('/health', (req, res) => {
