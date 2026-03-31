@@ -9,7 +9,8 @@ const { MercadoPagoConfig, Payment } = require('mercadopago');
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: process.env.FRONTEND_URL || '*', methods: ['GET', 'POST'] }));
+const CORS_ORIGIN = (process.env.FRONTEND_URL || '*').trim();
+app.use(cors({ origin: CORS_ORIGIN, methods: ['GET', 'POST'] }));
 
 /* ==========================================
    MERCADO PAGO
